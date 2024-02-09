@@ -1,3 +1,4 @@
+#!/bin/sh
 # Build Script for Mojito
 
 # Remove local_manifests directory
