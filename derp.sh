@@ -3,11 +3,13 @@
 # Remove local_manifests directory
 rm -rf .repo/local_manifests
 
-# Clone the manifest repository
+## Clone the manifest repository
+repo init --depth=1 -u https://github.com/DerpFest-AOSP/manifest.git -b 14
+
 git clone https://github.com/giosaja96/local_manifest --depth 1 -b main .repo/local_manifests
 
 # Force sync the repository
-repo sync --force-sync -c -j $(nproc)
+repo sync -c -j4 --force-sync --no-clone-bundle --no-tags
 
 ## Install ccache
 sudo apt update
