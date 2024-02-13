@@ -15,6 +15,7 @@ repo init -u https://github.com/bananadroid/android_manifest.git -b 14 --git-lfs
 git clone https://github.com/gioaprilino/local_manifest.git .repo/local_manifests -b banana && \
 
 # Removals
+rm -rf prebuilts/clang/host/linux-x86
 
 # Sync the repositories
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune && \
