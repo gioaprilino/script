@@ -26,7 +26,7 @@ source build/envsetup.sh && \
 # Lunch configuration
 lunch banana_mojito-userdebug && \
 
-m installclean && m banana && \
+df &&m installclean && m banana && \
 echo "Date and time:" ; \
 
 # Print out/build_date.txt
