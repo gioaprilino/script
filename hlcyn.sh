@@ -24,9 +24,9 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimiz
 source build/envsetup.sh && \
 
 # Lunch configuration
-lunch halcyon_mojito-userdebug && \
+lunch halcyon_mojito-RELEASE-userdebug && \
 
-make carthage -j\$(nproc --all) && \
+make carthage  && \
 echo "Date and time:" ; \
 
 # Print out/build_date.txt
