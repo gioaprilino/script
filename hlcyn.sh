@@ -1,53 +1,30 @@
 #!/bin/bash
 
-set -e
+rm -rf .repo/local_manifests/
 
-# Initialize repo with specified manifest
-repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
-
-# Run inside foss.crave.io devspace, in the project folder
-# Remove existing local_manifests
-crave run --no-patch -- "rm -rf .repo/local_manifests && \
-# Initialize repo with specified manifest
-repo init -u https://github.com/halcyonproject/manifest -b 14.3 --git-lfs && \
+# Rom source repo
+repo init --depth=1 -u https://github.com/halcyonproject/manifest.git -b 14.3 --git-lfs
+echo "=================="
+echo "Repo init success"
+echo "=================="
 
 # Clone local_manifests repository
-git clone https://github.com/gioaprilino/local_manifest.git .repo/local_manifests -b hlcyn && \
-
-# Removals
-#rm -rf prebuilts/clang/host/linux-x86
+git clone -b hlcyn https://github.com/gioaprilino/local_manifest.git .repo/local_manifests
+echo "============================"
+echo "Local manifest clone success"
+echo "============================"
 
 # Sync the repositories
-repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune && \
+/opt/crave/resync.sh
+echo "============================"
 
-# Set up build environment
-source build/envsetup.sh && \
+# Export
+export BUILD_USERNAME=gioaprilino
+export BUILD_HOSTNAME=crave
+export ALLOW_MISSING_DEPENDENCIES=TRUE
+echo "======= Export Done ======"
 
-# Lunch configuration
-lunch halcyon_mojito-RELEASE-userdebug && \
-
-make carthage  && \
-echo "Date and time:" ; \
-
-# Print out/build_date.txt
-cat out/build_date.txt; echo \
-
-# Print SHA256
-sha256sum out/target/product/*/*.zip"
-
-# Clean up
-# rm -rf tissot/*
-
-
-
-# Pull generated zip files
-# crave pull out/target/product/*/*.zip 
-
-# Pull generated img files
-#crave pull out/target/product/*/*.img
-
-# Upload zips to Telegram
-# telegram-upload --to sdreleases tissot/*.zip
-
-#Upload to Github Releases
-#curl -sf https://raw.githubusercontent.com/Meghthedev/Releases/main/headless.sh | sh
+#build the rom
+. build/envsetup.sh
+lunch halcyon_mojito-RELEASE-userdebug
+make carthage -j$(nproc --all)
