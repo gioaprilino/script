@@ -40,7 +40,7 @@ https://github.com/gioaprilino/android_hardware_xiaomi_1.git --depth 1 -b mojito
 export SELINUX_IGNORE_NEVERALLOWS=true
 
 # Set up th build environment
-. build/envsetup.sh
+source build/envsetup.sh
 
 # generating keys
 gk -s
